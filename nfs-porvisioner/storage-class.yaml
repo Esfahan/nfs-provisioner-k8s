@@ -1,0 +1,9 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  # This is storageClassName.
+  name: nfs
+# Same as spec.template.spec.containers.env.name in deployment.yml
+provisioner: lab.hoge.jp/nfs
+# Delete or Retain. Default: Delete
+reclaimPolicy: Retain

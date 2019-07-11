@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nfs-client-provisioner
+spec:
+  replicas: 1
+  # RollingUpdate or Recreate
+  # Recreate: All pods are going to be deleted.
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nfs-client-provisioner
+    spec:
+      # Same as ServiceAccount metadata.name in rbac.yml
+      serviceAccountName: nfs-client-provisioner
+      # Definition of nfs-provisioner
+      containers:
+        - name: nfs-client-provisioner
+          image: quay.io/external_storage/nfs-client-provisioner:latest
+          volumeMounts:
+            # Same as spec.template.spec.volumes.name below
+            - name: nfs-client-root
+              # Mounted dir on the container
+              mountPath: /persistentvolumes
+          env:
+            - name: PROVISIONER_NAME
+              # Same as provisioner in storage-class.yml
+              value: lab.hoge.jp/nfs
+            - name: NFS_SERVER
+              # hostname or ipaddr of nfs-server
+              value: {{NFS_HOST}}
+            - name: NFS_PATH
+              # Mounted server on nfs-server
+              value: /var/share/nfs
+      volumes:
+        - name: nfs-client-root
+          nfs:
+            # hostname or ipaddr of nfs-server
+            server: {{NFS_HOST}}
+            # Mounted server on nfs-server
+            path: /var/share/nfs
