@@ -77,6 +77,10 @@ esac
 kubectl create namespace ${NAMESPACE}
 kubectl config set-context $(kubectl config current-context) --namespace=${NAMESPACE}
 
+if [ ! -e "${BUILD_DIRNAME}" ]; then
+  mkdir ${BUILD_DIRNAME}
+fi
+
 ${SED_COMMAND} "s|{{NFS_HOST}}|${NFS_HOST}|g" ${DIRNAME}/deployment.yaml > ${BUILD_DIRNAME}/deployment.yaml
 ${SED_COMMAND} "s|{{NAMESPACE}}|${NAMESPACE}|g" ${DIRNAME}/rbac.yaml > ${BUILD_DIRNAME}/rbac.yaml
 
