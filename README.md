@@ -29,7 +29,7 @@ $ sudo ./nfs-server/client.sh -n {hostname or ipaddr of nfs-server}
 
 ## Manifests of nfs-provisioner on Kubernetes
 ### Set hostname or ipaddr of nfs-server
-Set hostname or ipaddr of nfs-server in ./nfs-porvisioner/deployment.yml
+Set hostname or ipaddr of nfs-server in ./nfs-provisionerg/deployment.yml
 
 - NFS_SERVER on `spec.template.spec.containers.env`
 - `spec.template.volumes.nfs.server`
@@ -38,14 +38,14 @@ Set hostname or ipaddr of nfs-server in ./nfs-porvisioner/deployment.yml
 Create nfs-provisioner on Kubernetes.
 
 ```
-$ sudo ./nfs-porvisioner/apply.sh -n {NAMESPACE} -c {NFS_HOST}
+$ sudo ./nfs-provisionerg/apply.sh -n {NAMESPACE} -c {NFS_HOST}
 ```
 
 ### Delete nfs-provisioner
 Delete nfs-provisioner on Kubernetes.
 
 ```
-$ sudo ./nfs-porvisioner/delete.sh -n {NAMESPACE}
+$ sudo ./nfs-provisionerg/delete.sh -n {NAMESPACE}
 ```
 
 
